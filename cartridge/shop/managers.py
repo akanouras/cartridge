@@ -262,6 +262,12 @@ class FacebookDiscountManager(DiscountManager):
         """
         Scans active discounts for which "liking" prerequisites are met.
         """
+
+        # Abort gracefully if not configured.
+        if not (hasattr(settings, 'FACEBOOK_APP_ID') and
+                hasattr(settings, 'FACEBOOK_APP_SECRET')):
+            return None, 0
+
         import facebook
         facebook_user = facebook.get_user_from_cookie(
             cookies,
