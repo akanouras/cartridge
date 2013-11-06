@@ -1,5 +1,6 @@
 import locale
 import platform
+from decimal import Decimal
 
 from django import template
 
@@ -67,10 +68,13 @@ def _order_totals(context):
             for total_field, type_field, label in settings.SHOP_ORDER_TOTALS:
                 if type_field:
                     label = session.get(type_field, None)
-                total = session.get(total_field, None)
-                if total:
-                    totals.append((label, total))
-                    order_total += total
+                try:
+                    total = Decimal(session.get(total_field, None))
+                    if total:
+                        totals.append((label, total))
+                        order_total += total
+                except TypeError:
+                    pass
     context["item_total"] = item_total
     context["totals"] = totals
     context["order_total"] = order_total
