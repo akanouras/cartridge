@@ -38,7 +38,7 @@ from mezzanine.core.admin import (
     DisplayableAdmin, TabularDynamicInlineAdmin)
 from mezzanine.pages.admin import PageAdmin
 
-#from cartridge.attributes.admin import ProductAttributeAdmin
+from cartridge.attributes.admin import ProductAttributeAdmin
 from cartridge.shop.fields import MoneyField
 from cartridge.shop.forms import ProductAdminForm, ProductVariationAdminForm
 from cartridge.shop.forms import ProductVariationAdminFormset
@@ -158,8 +158,7 @@ class ProductAdmin(DisplayableAdmin):
     filter_horizontal = ("categories", "related_products", "upsell_products")
     search_fields = ("title", "content", "categories__title",
                      "variations__sku")
-    #inlines = (ProductImageAdmin, ProductAttributeAdmin, ProductVariationAdmin)
-    inlines = (ProductImageAdmin, ProductVariationAdmin)
+    inlines = (ProductImageAdmin, ProductAttributeAdmin, ProductVariationAdmin)
     form = ProductAdminForm
     fieldsets = product_fieldsets
 
